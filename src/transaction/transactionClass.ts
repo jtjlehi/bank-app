@@ -1,4 +1,5 @@
 import {Transaction as TransactionInterface} from './transactionInterface';
+import {TransactionOrigin} from './transactionOriginEnum';
 
 export class TransactionClass implements TransactionInterface {
     success: boolean;
@@ -14,7 +15,7 @@ export class TransactionClass implements TransactionInterface {
         let resultBalance = balance - amount
         this.amount = amount;
         this.resultBalance = balance - amount;
-        this.description = `Withdrew $${amount} from the account using ${type} resulting in a balance of $${balance}.`
+        this.description = `Withdrew $${amount} from the account using ${TransactionOrigin[type]} resulting in a balance of $${balance}.`
         this.errorMessage = '';
     }
     failWithdraw(balance: number, error: string) {

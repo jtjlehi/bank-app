@@ -1,4 +1,5 @@
 import {Transaction} from "../transaction/transactionInterface";
+import {TransactionOrigin} from '../transaction/transactionOriginEnum';
 
 export interface Account {
     accountHolderName: string;

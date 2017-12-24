@@ -20,7 +20,7 @@ var decorators_1 = require("../decorators");
 var transactionClass_1 = require("../transaction/transactionClass");
 //import {Account} from "./accountInterface";
 var accountClass_1 = require("./accountClass");
-var CheckingAccount = (function (_super) {
+var CheckingAccount = /** @class */ (function (_super) {
     __extends(CheckingAccount, _super);
     function CheckingAccount(name, birthDate) {
         var _this = _super.call(this, name, birthDate) || this;
@@ -28,15 +28,15 @@ var CheckingAccount = (function (_super) {
         return _this;
     }
     CheckingAccount.prototype.withdrawMoney = function (amount, description, transactionType) {
-        var _this = this;
         if (this.accountHistory.length < 1001) {
-            return this.withdraw(amount, function () {
-                var transaction = new transactionClass_1.TransactionClass(true);
-                transaction.successWithdraw(amount, _this.balance, transactionType);
-                console.log(transaction.description);
-                _this.accountHistory.push(transaction);
-                return transaction;
-            });
+            return this.withdraw(amount, transactionType);
+        }
+        else {
+            var transaction = new transactionClass_1.TransactionClass(false);
+            transaction.failWithdraw(this.balance, 'You have made to many withdrawls');
+            this.accountHistory.push(transaction);
+            console.log(transaction.description);
+            return transaction;
         }
     };
     CheckingAccount.prototype.depositMoney = function (amount, description) {

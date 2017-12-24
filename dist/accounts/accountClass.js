@@ -1,17 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var transactionClass_1 = require("../transaction/transactionClass");
-var Account = (function () {
+var Account = /** @class */ (function () {
     //constructor
     function Account(name, birthDate) {
         this.accountHolderName = name;
         this.accountHolderBirthDate = birthDate;
         this.accountHistory = [];
     }
-    Account.prototype.withdraw = function (amount, cbk) {
+    Account.prototype.withdraw = function (amount, transactionType) {
         if (this.balance - amount >= 0) {
             this.balance = this.balance - amount;
-            return cbk();
+            var transaction = new transactionClass_1.TransactionClass(true);
+            transaction.successWithdraw(amount, this.balance, transactionType);
+            console.log(transaction.description);
+            this.accountHistory.push(transaction);
+            return transaction;
         }
         else {
             var transaction = new transactionClass_1.TransactionClass(false);

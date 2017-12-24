@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var TransactionClass = (function () {
+var transactionOriginEnum_1 = require("./transactionOriginEnum");
+var TransactionClass = /** @class */ (function () {
     function TransactionClass(success) {
         this.success = success;
     }
@@ -8,7 +9,7 @@ var TransactionClass = (function () {
         var resultBalance = balance - amount;
         this.amount = amount;
         this.resultBalance = balance - amount;
-        this.description = "Withdrew $" + amount + " from the account using " + type + " resulting in a balance of $" + balance + ".";
+        this.description = "Withdrew $" + amount + " from the account using " + transactionOriginEnum_1.TransactionOrigin[type] + " resulting in a balance of $" + balance + ".";
         this.errorMessage = '';
     };
     TransactionClass.prototype.failWithdraw = function (balance, error) {

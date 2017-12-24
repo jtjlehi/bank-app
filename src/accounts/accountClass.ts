@@ -1,6 +1,7 @@
 import {Account as AccountInterface} from "./accountInterface";
 import {Transaction} from "../transaction/transactionInterface";
-import { TransactionClass } from "../transaction/transactionClass";
+import {TransactionClass} from "../transaction/transactionClass";
+import {TransactionOrigin} from '../transaction/transactionOriginEnum';
 
 export abstract class Account implements AccountInterface {
     //type definitions
@@ -20,10 +21,14 @@ export abstract class Account implements AccountInterface {
     abstract withdrawMoney(amount: number, description: string, transactionOrigin: TransactionOrigin): Transaction;
     abstract depositMoney(amount: number, description: string): Transaction;
     abstract advanceDate(numberOfDays: number);
-    withdraw(amount: number, cbk: Function): Transaction {
+    withdraw(amount: number, transactionType: TransactionOrigin): Transaction {
         if(this.balance - amount >= 0) {
             this.balance = this.balance - amount;
-            return cbk();
+            let transaction = new TransactionClass(true);
+            transaction.successWithdraw(amount, this.balance, transactionType);
+            console.log(transaction.description);
+            this.accountHistory.push(transaction);
+            return transaction;
         }
         else{
             let transaction = new TransactionClass(false);
