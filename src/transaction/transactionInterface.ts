@@ -1,4 +1,4 @@
-interface Transaction {
+export interface Transaction {
     success: boolean;
     // amount will be positive for deposits and negative for withdrawals:
     amount: number;

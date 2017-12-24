@@ -4,14 +4,10 @@ var Account = (function () {
     function Account(name, birthDate) {
         this.accountHolderName = name;
         this.accountHolderBirthDate = birthDate;
+        this.balance = 0;
+        this.accountHistory = [];
     }
-    Account.prototype.setBalance = function (newBalance) {
-        this.balance = newBalance;
-    };
-    Account.prototype.getBalance = function () {
-        if (this.balance) {
-            return (this.balance);
-        }
+    Account.prototype.testMethod = function () {
     };
     return Account;
 }());

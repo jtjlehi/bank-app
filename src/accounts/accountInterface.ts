@@ -7,6 +7,9 @@ export interface Account {
     advanceDate(numberOfDays: number);
     withdrawMoney(amount: number,
                   description: string,
-                  transactionOrigin: TransactionOrigin) : Transaction;
-    depositMoney(amount: number, description: string) : Transaction;
+                  transactionOrigin: TransactionOrigin)
+        : Transaction;
+    depositMoney(amount: number,
+                 description: string)
+        : Transaction;
 }
