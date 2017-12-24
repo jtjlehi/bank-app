@@ -1,3 +1,5 @@
+import {Transaction} from "../transaction/transactionInterface";
+
 export interface Account {
     accountHolderName: string;
     accountHolderBirthDate: Date;
