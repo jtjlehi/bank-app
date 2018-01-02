@@ -10,6 +10,10 @@ var Account = /** @class */ (function () {
         this.date = new Date();
         this.month = [];
     }
+    Account.prototype.advanceDate = function (numberOfDays) {
+        var monthsAdvanced = this.advance(numberOfDays);
+        this.addInterest(monthsAdvanced);
+    };
     Account.prototype.withdraw = function (amount, transactionType) {
         if (this.balance - amount >= 0) {
             this.balance = this.balance - amount;
@@ -37,10 +41,10 @@ var Account = /** @class */ (function () {
         }
         return (this.date.getFullYear() - year) * 12 + (this.date.getMonth() - month);
     };
-    Account.prototype.addInterest = function (interest, months) {
+    Account.prototype.addInterest = function (months) {
         console.log(this.balance);
         for (var i = 0; i < months; i++) {
-            this.balance = this.balance + this.balance * interest / 12;
+            this.balance = this.balance + this.balance * this.interest / 12;
             console.log(this.balance);
         }
     };

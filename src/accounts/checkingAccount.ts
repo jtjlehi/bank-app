@@ -10,6 +10,7 @@ export class CheckingAccount extends Account {
     constructor(name: string, birthDate: Date) {
         super(name, birthDate);
         this.balance = 1000;
+        this.interest = .01;
     }
     withdrawMoney(amount: number, description: string, transactionType: TransactionOrigin): Transaction {
         if(this.month.length < 1001) {
@@ -29,6 +30,6 @@ export class CheckingAccount extends Account {
     }
     advanceDate(numberOfDays: number) {
         let monthsAdvanced = this.advance(numberOfDays);
-        this.addInterest(.01, monthsAdvanced);
+        this.addInterest(monthsAdvanced);
     }
 }

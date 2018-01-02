@@ -25,6 +25,7 @@ var CheckingAccount = /** @class */ (function (_super) {
     function CheckingAccount(name, birthDate) {
         var _this = _super.call(this, name, birthDate) || this;
         _this.balance = 1000;
+        _this.interest = .01;
         return _this;
     }
     CheckingAccount.prototype.withdrawMoney = function (amount, description, transactionType) {
@@ -45,7 +46,7 @@ var CheckingAccount = /** @class */ (function (_super) {
     };
     CheckingAccount.prototype.advanceDate = function (numberOfDays) {
         var monthsAdvanced = this.advance(numberOfDays);
-        this.addInterest(.02, monthsAdvanced);
+        this.addInterest(monthsAdvanced);
     };
     CheckingAccount = __decorate([
         decorators_1.displayClassNameWithPurpose('An account class for people who want to withdraw from there account easily')

@@ -10,6 +10,7 @@ export abstract class Account implements AccountInterface {
     balance: number;
     accountHistory : Transaction[];
     accountType: AccountType;
+    protected interest;
     protected date: Date;
     protected month: Transaction[];
     //constructor
@@ -23,7 +24,10 @@ export abstract class Account implements AccountInterface {
     //methods
     abstract withdrawMoney(amount: number, description: string, transactionOrigin: TransactionOrigin): Transaction;
     abstract depositMoney(amount: number, description: string): Transaction;
-    abstract advanceDate(numberOfDays: number);
+    advanceDate(numberOfDays: number){
+        let monthsAdvanced = this.advance(numberOfDays);
+        this.addInterest(monthsAdvanced);
+    }
     withdraw(amount: number, transactionType: TransactionOrigin): Transaction {
         if(this.balance - amount >= 0) {
             this.balance = this.balance - amount;
@@ -51,10 +55,10 @@ export abstract class Account implements AccountInterface {
         }
         return (this.date.getFullYear() - year) * 12 + (this.date.getMonth() - month);
     }
-    protected addInterest(interest: number, months: number) {
+    protected addInterest(months: number) {
         console.log(this.balance)
         for(let i = 0; i < months; i ++) {
-            this.balance = this.balance + this.balance * interest/12;
+            this.balance = this.balance + this.balance * this.interest/12;
             console.log(this.balance);
         }
     }
