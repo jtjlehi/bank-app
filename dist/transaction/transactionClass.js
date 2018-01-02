@@ -2,10 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var transactionOriginEnum_1 = require("./transactionOriginEnum");
 var TransactionClass = /** @class */ (function () {
-    function TransactionClass(success) {
-        this.success = success;
+    function TransactionClass() {
     }
     TransactionClass.prototype.successWithdraw = function (amount, balance, type) {
+        this.success;
         var resultBalance = balance - amount;
         this.amount = amount;
         this.resultBalance = balance - amount;
@@ -13,6 +13,7 @@ var TransactionClass = /** @class */ (function () {
         this.errorMessage = '';
     };
     TransactionClass.prototype.failWithdraw = function (balance, error) {
+        this.success = false;
         this.amount = 0;
         this.resultBalance = balance;
         this.description = "Failed to withdraw money";

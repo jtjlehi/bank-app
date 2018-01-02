@@ -13,23 +13,19 @@ export class CheckingAccount extends Account {
         this.interest = .01;
     }
     withdrawMoney(amount: number, description: string, transactionType: TransactionOrigin): Transaction {
-        if(this.month.length < 1001) {
-            return this.withdraw(amount, transactionType);
+        this.currentTransaction = new TransactionClass(amount, transactionType);
+        if(this.month[transactionType].length < 1001) {
+            this.balanceCheck(amount, transactionType);
         }
         else {
-            let transaction = new TransactionClass(false);
-            transaction.failWithdraw(this.balance, 'You have made to many withdrawls');
-            this.accountHistory.push(transaction);
-            this.month.push(transaction);
-            console.log(transaction.description);
-            return transaction;
+            this.currentTransaction.failWithdraw(this.balance, 'You have made to many withdrawls');
+            this.accountHistory.push(this.currentTransaction);
+            this.month[transactionType].push(this.currentTransaction);
+            console.log(this.currentTransaction.description);
         }
+        return this.currentTransaction;
     }
     depositMoney(amount: number, description: string): Transaction {
         throw new Error("Method not implemented.");
-    }
-    advanceDate(numberOfDays: number) {
-        let monthsAdvanced = this.advance(numberOfDays);
-        this.addInterest(monthsAdvanced);
     }
 }

@@ -1,3 +1,5 @@
+import { TransactionOrigin } from "./transactionOriginEnum";
+
 export interface Transaction {
     success: boolean;
     // amount will be positive for deposits and negative for withdrawals:
@@ -8,4 +10,9 @@ export interface Transaction {
     description: string;
     // errorMessage will be an empty string when success is true:
     errorMessage: string;
+    //transaction type
+    type: TransactionOrigin;
+    //methods
+    successWithdraw(amount: number, balance: number, type: TransactionOrigin): void;
+    failWithdraw(balance: number, error: string): void;
 }

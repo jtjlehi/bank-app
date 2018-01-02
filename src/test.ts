@@ -3,4 +3,5 @@ import {TransactionOrigin} from './transaction/transactionOriginEnum';
 
 let myCheckingAccount = new CheckingAccount('Jared', new Date(100, 4, 4));
 
-myCheckingAccount.advanceDate(300);
+myCheckingAccount.withdrawMoney(40, 'test', TransactionOrigin.web);
+myCheckingAccount.advanceDate(40);

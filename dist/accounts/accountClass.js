@@ -8,36 +8,44 @@ var Account = /** @class */ (function () {
         this.accountHolderBirthDate = birthDate;
         this.accountHistory = [];
         this.date = new Date();
-        this.month = [];
+        this.month = { 1: [], 2: [], 3: [] };
     }
     Account.prototype.advanceDate = function (numberOfDays) {
         var monthsAdvanced = this.advance(numberOfDays);
         this.addInterest(monthsAdvanced);
     };
-    Account.prototype.withdraw = function (amount, transactionType) {
+    //non interface methods
+    //withdrawMoney related methods
+    Account.prototype.balanceCheck = function (amount, transactionType) {
+        var transaction = new transactionClass_1.TransactionClass();
         if (this.balance - amount >= 0) {
+            //make the withdrawl
             this.balance = this.balance - amount;
-            var transaction = new transactionClass_1.TransactionClass(true);
+            //say the transaction was a success
             transaction.successWithdraw(amount, this.balance, transactionType);
-            console.log(transaction.description);
+            //store the transaction
             this.accountHistory.push(transaction);
+            this.month[transactionType].push(transaction);
+            //feedback
+            console.log(transaction.description);
             return transaction;
         }
         else {
-            var transaction = new transactionClass_1.TransactionClass(false);
             transaction.failWithdraw(this.balance, 'Withdrawl is over balance');
         }
     };
+    //depositMoney related methods
     Account.prototype.deposit = function (amount) {
         this.balance += amount;
     };
+    //advanceDate related methods
     Account.prototype.advance = function (numberOfDays) {
         var year = this.date.getFullYear();
         var month = this.date.getMonth();
         var dayOfMonth = this.date.getDate();
         this.date = new Date(year, month, dayOfMonth + numberOfDays);
         if (month !== this.date.getMonth()) {
-            this.month = [];
+            this.month = { 1: [], 2: [], 3: [] };
         }
         return (this.date.getFullYear() - year) * 12 + (this.date.getMonth() - month);
     };

@@ -10,16 +10,18 @@ export abstract class Account implements AccountInterface {
     balance: number;
     accountHistory : Transaction[];
     accountType: AccountType;
+    //protected variables
     protected interest;
     protected date: Date;
-    protected month: Transaction[];
+    protected month: {1: Transaction[], 2: Transaction[], 3: Transaction[]};
+    protected currentTransaction: Transaction;
     //constructor
     constructor(name: string, birthDate: Date) {
         this.accountHolderName = name;
         this.accountHolderBirthDate = birthDate;
         this.accountHistory = [];
         this.date = new Date();
-        this.month = [];
+        this.month = {1: [], 2: [], 3: []}
     }
     //methods
     abstract withdrawMoney(amount: number, description: string, transactionOrigin: TransactionOrigin): Transaction;
@@ -28,30 +30,39 @@ export abstract class Account implements AccountInterface {
         let monthsAdvanced = this.advance(numberOfDays);
         this.addInterest(monthsAdvanced);
     }
-    withdraw(amount: number, transactionType: TransactionOrigin): Transaction {
+    //non interface methods
+    //withdrawMoney related methods
+    protected balanceCheck(amount: number, transactionType: TransactionOrigin): void {
         if(this.balance - amount >= 0) {
-            this.balance = this.balance - amount;
-            let transaction = new TransactionClass(true);
-            transaction.successWithdraw(amount, this.balance, transactionType);
-            console.log(transaction.description);
-            this.accountHistory.push(transaction);
-            return transaction;
+            this.successWithdraw
         }
         else{
-            let transaction = new TransactionClass(false);
-            transaction.failWithdraw(this.balance, 'Withdrawl is over balance');
+            this.currentTransaction.failWithdraw(this.balance, 'Withdrawl is over balance');
         }
     }
-    deposit(amount: number) {
+    protected successWithdraw(amount: number, transactionType: TransactionOrigin) {
+        //make the withdrawl
+        this.balance = this.balance - amount;
+        //say the transaction was a success
+        this.currentTransaction.successWithdraw(amount, this.balance, transactionType);
+        //store the transaction
+        this.accountHistory.push(this.currentTransaction);
+        this.month[transactionType].push(this.currentTransaction);
+        //feedback
+        console.log(this.currentTransaction.description);
+    }
+    //depositMoney related methods
+    protected deposit(amount: number) {
         this.balance += amount;
     }
+    //advanceDate related methods
     protected advance(numberOfDays: number): number {
         let year = this.date.getFullYear();
         let month = this.date.getMonth();
         let dayOfMonth = this.date.getDate();
         this.date = new Date(year, month, dayOfMonth + numberOfDays);
         if (month !== this.date.getMonth()) {
-            this.month = [];
+            this.month = {1:[], 2: [], 3: []};
         }
         return (this.date.getFullYear() - year) * 12 + (this.date.getMonth() - month);
     }

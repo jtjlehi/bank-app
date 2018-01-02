@@ -4,21 +4,24 @@ import {TransactionOrigin} from './transactionOriginEnum';
 export class TransactionClass implements TransactionInterface {
     success: boolean;
     amount: number;
+    type: TransactionOrigin;
     resultBalance: number;
     transactionDate: Date;
     description: string;
     errorMessage: string;
-    constructor(success: boolean) {
-        this.success = success;
-    }
-    successWithdraw(amount: number, balance: number, type: TransactionOrigin) {
-        let resultBalance = balance - amount
+    constructor(amount: number, type: TransactionOrigin) {
         this.amount = amount;
-        this.resultBalance = balance - amount;
-        this.description = `Withdrew $${amount} from the account using ${TransactionOrigin[type]} resulting in a balance of $${balance}.`
+        this.type = type;
+    }
+    successWithdraw(balance: number) {
+        this.success
+        let resultBalance = balance - this.amount
+        this.resultBalance = balance - this.amount;
+        this.description = `Withdrew $${this.amount} from the account using ${TransactionOrigin[this.type]} resulting in a balance of $${balance}.`
         this.errorMessage = '';
     }
     failWithdraw(balance: number, error: string) {
+        this.success = false;
         this.amount = 0;
         this.resultBalance = balance;
         this.description = `Failed to withdraw money`;
