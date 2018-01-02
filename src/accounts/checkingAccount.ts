@@ -1,4 +1,4 @@
-import {displayClassName, displayClassNameWithPurpose, nonImplementedMethod} from "../decorators";
+import {displayClassName, displayClassNameWithPurpose} from "../decorators";
 import {Transaction} from '../transaction/transactionInterface';
 import {TransactionClass} from '../transaction/transactionClass';
 //import {Account} from "./accountInterface";
@@ -27,6 +27,6 @@ export class CheckingAccount extends Account {
         throw new Error("Method not implemented.");
     }
     advanceDate(numberOfDays: number) {
-        throw new Error("Method not implemented.");
+        this.advance(numberOfDays);
     }
 }

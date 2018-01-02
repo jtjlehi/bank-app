@@ -10,12 +10,13 @@ export abstract class Account implements AccountInterface {
     balance: number;
     accountHistory : Transaction[];
     accountType: AccountType;
-    date: Date;
+    protected date: Date;
     //constructor
     constructor(name: string, birthDate: Date) {
         this.accountHolderName = name;
         this.accountHolderBirthDate = birthDate;
         this.accountHistory = [];
+        this.date = new Date();
     }
     //methods
     abstract withdrawMoney(amount: number, description: string, transactionOrigin: TransactionOrigin): Transaction;
@@ -37,5 +38,11 @@ export abstract class Account implements AccountInterface {
     }
     deposit(amount: number) {
         this.balance += amount;
+    }
+    protected advance(numberOfDays: number) {
+        let year = this.date.getFullYear();
+        let month = this.date.getMonth();
+        let dayOfMonth = this.date.getDate();
+        this.date = new Date(year, month, dayOfMonth + numberOfDays);
     }
 }
