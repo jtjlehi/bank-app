@@ -29,6 +29,6 @@ export class CheckingAccount extends Account {
     }
     advanceDate(numberOfDays: number) {
         let monthsAdvanced = this.advance(numberOfDays);
-        console.log(monthsAdvanced);
+        this.addInterest(.01, monthsAdvanced);
     }
 }

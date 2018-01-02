@@ -37,6 +37,13 @@ var Account = /** @class */ (function () {
         }
         return (this.date.getFullYear() - year) * 12 + (this.date.getMonth() - month);
     };
+    Account.prototype.addInterest = function (interest, months) {
+        console.log(this.balance);
+        for (var i = 0; i < months; i++) {
+            this.balance = this.balance + this.balance * interest / 12;
+            console.log(this.balance);
+        }
+    };
     return Account;
 }());
 exports.Account = Account;

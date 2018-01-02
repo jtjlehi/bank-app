@@ -41,7 +41,7 @@ export abstract class Account implements AccountInterface {
     deposit(amount: number) {
         this.balance += amount;
     }
-    protected advance(numberOfDays: number) {
+    protected advance(numberOfDays: number): number {
         let year = this.date.getFullYear();
         let month = this.date.getMonth();
         let dayOfMonth = this.date.getDate();
@@ -50,5 +50,12 @@ export abstract class Account implements AccountInterface {
             this.month = [];
         }
         return (this.date.getFullYear() - year) * 12 + (this.date.getMonth() - month);
+    }
+    protected addInterest(interest: number, months: number) {
+        console.log(this.balance)
+        for(let i = 0; i < months; i ++) {
+            this.balance = this.balance + this.balance * interest/12;
+            console.log(this.balance);
+        }
     }
 }

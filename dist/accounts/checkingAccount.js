@@ -45,7 +45,7 @@ var CheckingAccount = /** @class */ (function (_super) {
     };
     CheckingAccount.prototype.advanceDate = function (numberOfDays) {
         var monthsAdvanced = this.advance(numberOfDays);
-        console.log(monthsAdvanced);
+        this.addInterest(.02, monthsAdvanced);
     };
     CheckingAccount = __decorate([
         decorators_1.displayClassNameWithPurpose('An account class for people who want to withdraw from there account easily')
