@@ -11,12 +11,14 @@ export abstract class Account implements AccountInterface {
     accountHistory : Transaction[];
     accountType: AccountType;
     protected date: Date;
+    protected month: Transaction[];
     //constructor
     constructor(name: string, birthDate: Date) {
         this.accountHolderName = name;
         this.accountHolderBirthDate = birthDate;
         this.accountHistory = [];
         this.date = new Date();
+        this.month = [];
     }
     //methods
     abstract withdrawMoney(amount: number, description: string, transactionOrigin: TransactionOrigin): Transaction;
@@ -44,5 +46,8 @@ export abstract class Account implements AccountInterface {
         let month = this.date.getMonth();
         let dayOfMonth = this.date.getDate();
         this.date = new Date(year, month, dayOfMonth + numberOfDays);
+        if (month !== this.date.getMonth()) {
+            this.month = [];
+        }
     }
 }
