@@ -8,7 +8,7 @@ var Account = /** @class */ (function () {
         this.accountHolderBirthDate = birthDate;
         this.accountHistory = [];
         this.date = new Date();
-        this.month = 0;
+        this.month = [];
     }
     Account.prototype.withdraw = function (amount, transactionType) {
         if (this.balance - amount >= 0) {
@@ -28,12 +28,14 @@ var Account = /** @class */ (function () {
         this.balance += amount;
     };
     Account.prototype.advance = function (numberOfDays) {
-        console.log(this.date);
         var year = this.date.getFullYear();
         var month = this.date.getMonth();
         var dayOfMonth = this.date.getDate();
         this.date = new Date(year, month, dayOfMonth + numberOfDays);
-        console.log(this.date);
+        if (month !== this.date.getMonth()) {
+            this.month = [];
+        }
+        return (this.date.getFullYear() - year) * 12 + (this.date.getMonth() - month);
     };
     return Account;
 }());

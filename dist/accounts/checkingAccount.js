@@ -28,13 +28,14 @@ var CheckingAccount = /** @class */ (function (_super) {
         return _this;
     }
     CheckingAccount.prototype.withdrawMoney = function (amount, description, transactionType) {
-        if (this.accountHistory.length < 1001) {
+        if (this.month.length < 1001) {
             return this.withdraw(amount, transactionType);
         }
         else {
             var transaction = new transactionClass_1.TransactionClass(false);
             transaction.failWithdraw(this.balance, 'You have made to many withdrawls');
             this.accountHistory.push(transaction);
+            this.month.push(transaction);
             console.log(transaction.description);
             return transaction;
         }
@@ -43,7 +44,8 @@ var CheckingAccount = /** @class */ (function (_super) {
         throw new Error("Method not implemented.");
     };
     CheckingAccount.prototype.advanceDate = function (numberOfDays) {
-        throw new Error("Method not implemented.");
+        var monthsAdvanced = this.advance(numberOfDays);
+        console.log(monthsAdvanced);
     };
     CheckingAccount = __decorate([
         decorators_1.displayClassNameWithPurpose('An account class for people who want to withdraw from there account easily')

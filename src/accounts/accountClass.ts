@@ -49,5 +49,6 @@ export abstract class Account implements AccountInterface {
         if (month !== this.date.getMonth()) {
             this.month = [];
         }
+        return (this.date.getFullYear() - year) * 12 + (this.date.getMonth() - month);
     }
 }

@@ -12,13 +12,14 @@ export class CheckingAccount extends Account {
         this.balance = 1000;
     }
     withdrawMoney(amount: number, description: string, transactionType: TransactionOrigin): Transaction {
-        if(this.accountHistory.length < 1001) {
+        if(this.month.length < 1001) {
             return this.withdraw(amount, transactionType);
         }
         else {
             let transaction = new TransactionClass(false);
             transaction.failWithdraw(this.balance, 'You have made to many withdrawls');
             this.accountHistory.push(transaction);
+            this.month.push(transaction);
             console.log(transaction.description);
             return transaction;
         }
@@ -27,6 +28,7 @@ export class CheckingAccount extends Account {
         throw new Error("Method not implemented.");
     }
     advanceDate(numberOfDays: number) {
-        this.advance(numberOfDays);
+        let monthsAdvanced = this.advance(numberOfDays);
+        console.log(monthsAdvanced);
     }
 }
