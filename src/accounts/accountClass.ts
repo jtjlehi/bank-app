@@ -15,7 +15,6 @@ export abstract class Account implements AccountInterface {
     protected date: Date;
     protected month: {1: number, 2: number, 3: number};
     protected currentTransaction: Transaction;
-    protected transactionCost: number;
     //constructor
     constructor(name: string, birthDate: Date) {
         this.accountHolderName = name;
