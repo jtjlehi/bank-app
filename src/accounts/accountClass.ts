@@ -28,7 +28,6 @@ export abstract class Account implements AccountInterface {
     //methods
     abstract withdrawMoney(amount: number, description: string, transactionOrigin: TransactionOrigin): Transaction;
     depositMoney(amount: number, description: string): Transaction {
-        console.log(this.balance);
         let transaction = new TransactionClass(amount, TransactionOrigin.web);
         this.balance = transaction.deposit(this.balance, description);
         console.log(transaction.description);
@@ -83,10 +82,8 @@ export abstract class Account implements AccountInterface {
         return (this.date.getFullYear() - year) * 12 + (this.date.getMonth() - month);
     }
     protected addInterest(months: number) {
-        console.log(this.balance)
         for(let i = 0; i < months; i ++) {
             this.balance = this.balance + this.balance * this.interest/12;
-            console.log(this.balance);
         }
     }
     findAge(): void {

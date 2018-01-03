@@ -18,10 +18,7 @@ export class RetirementAccount extends Account {
         if(this.age > 60) {
             this.transactionCost = 0;
         }
-        if(transactionType === TransactionOrigin.branch && this.month[transactionType] < 1000) {
-            this.balanceCheck(amount, transactionType);
-        }
-        else if(this.month[transactionType] < 6) {
+        if((transactionType === TransactionOrigin.branch && this.month[transactionType] < 1000) || (this.month[transactionType] < 6)) {
             this.balanceCheck(amount, transactionType);
         }
         else {
