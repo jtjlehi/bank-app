@@ -13,6 +13,6 @@ export interface Transaction {
     //transaction type
     type: TransactionOrigin;
     //methods
-    successWithdraw(amount: number, balance: number, type: TransactionOrigin): void;
+    successWithdraw(balance: number): void;
     failWithdraw(balance: number, error: string): void;
 }

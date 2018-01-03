@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var transactionClass_1 = require("../transaction/transactionClass");
 var Account = /** @class */ (function () {
     //constructor
     function Account(name, birthDate) {
@@ -8,7 +7,7 @@ var Account = /** @class */ (function () {
         this.accountHolderBirthDate = birthDate;
         this.accountHistory = [];
         this.date = new Date();
-        this.month = { 1: [], 2: [], 3: [] };
+        this.month = { 1: 0, 2: 0, 3: 0 };
     }
     Account.prototype.advanceDate = function (numberOfDays) {
         var monthsAdvanced = this.advance(numberOfDays);
@@ -17,22 +16,24 @@ var Account = /** @class */ (function () {
     //non interface methods
     //withdrawMoney related methods
     Account.prototype.balanceCheck = function (amount, transactionType) {
-        var transaction = new transactionClass_1.TransactionClass();
         if (this.balance - amount >= 0) {
-            //make the withdrawl
-            this.balance = this.balance - amount;
-            //say the transaction was a success
-            transaction.successWithdraw(amount, this.balance, transactionType);
-            //store the transaction
-            this.accountHistory.push(transaction);
-            this.month[transactionType].push(transaction);
-            //feedback
-            console.log(transaction.description);
-            return transaction;
+            this.successWithdraw();
         }
         else {
-            transaction.failWithdraw(this.balance, 'Withdrawl is over balance');
+            this.failWithdraw('Withdrawl is over balance.');
         }
+    };
+    Account.prototype.successWithdraw = function () {
+        //make the withdrawl
+        this.balance = this.balance - this.currentTransaction.amount;
+        //say the transaction was a success
+        this.currentTransaction.successWithdraw(this.balance);
+        //increase number of transactions for the month
+        this.month[this.currentTransaction.type] += 1;
+    };
+    Account.prototype.failWithdraw = function (reason) {
+        //make the transaction fail
+        this.currentTransaction.failWithdraw(this.balance, reason);
     };
     //depositMoney related methods
     Account.prototype.deposit = function (amount) {
@@ -45,7 +46,7 @@ var Account = /** @class */ (function () {
         var dayOfMonth = this.date.getDate();
         this.date = new Date(year, month, dayOfMonth + numberOfDays);
         if (month !== this.date.getMonth()) {
-            this.month = { 1: [], 2: [], 3: [] };
+            this.month = { 1: 0, 2: 0, 3: 0 };
         }
         return (this.date.getFullYear() - year) * 12 + (this.date.getMonth() - month);
     };

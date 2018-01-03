@@ -24,7 +24,7 @@ export class TransactionClass implements TransactionInterface {
         this.success = false;
         this.amount = 0;
         this.resultBalance = balance;
-        this.description = `Failed to withdraw money`;
-        this.errorMessage = `Withdrawl failure: ${error}`
+        this.errorMessage = `Failer Reason: ${error}`;
+        this.description = `Failed to withdraw money; ${this.errorMessage}`;
     }
 }

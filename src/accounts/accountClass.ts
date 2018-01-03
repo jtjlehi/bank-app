@@ -13,7 +13,7 @@ export abstract class Account implements AccountInterface {
     //protected variables
     protected interest;
     protected date: Date;
-    protected month: {1: Transaction[], 2: Transaction[], 3: Transaction[]};
+    protected month: {1: number, 2: number, 3: number};
     protected currentTransaction: Transaction;
     //constructor
     constructor(name: string, birthDate: Date) {
@@ -21,7 +21,7 @@ export abstract class Account implements AccountInterface {
         this.accountHolderBirthDate = birthDate;
         this.accountHistory = [];
         this.date = new Date();
-        this.month = {1: [], 2: [], 3: []}
+        this.month = {1: 0, 2: 0, 3: 0}
     }
     //methods
     abstract withdrawMoney(amount: number, description: string, transactionOrigin: TransactionOrigin): Transaction;
@@ -34,22 +34,23 @@ export abstract class Account implements AccountInterface {
     //withdrawMoney related methods
     protected balanceCheck(amount: number, transactionType: TransactionOrigin): void {
         if(this.balance - amount >= 0) {
-            this.successWithdraw
+            this.successWithdraw();
         }
         else{
-            this.currentTransaction.failWithdraw(this.balance, 'Withdrawl is over balance');
+            this.failWithdraw('Withdrawl is over balance.');
         }
     }
-    protected successWithdraw(amount: number, transactionType: TransactionOrigin) {
+    protected successWithdraw() {
         //make the withdrawl
-        this.balance = this.balance - amount;
+        this.balance = this.balance - this.currentTransaction.amount;
         //say the transaction was a success
-        this.currentTransaction.successWithdraw(amount, this.balance, transactionType);
-        //store the transaction
-        this.accountHistory.push(this.currentTransaction);
-        this.month[transactionType].push(this.currentTransaction);
-        //feedback
-        console.log(this.currentTransaction.description);
+        this.currentTransaction.successWithdraw(this.balance);
+        //increase number of transactions for the month
+        this.month[this.currentTransaction.type] += 1;
+    }
+    protected failWithdraw(reason: string) {
+        //make the transaction fail
+        this.currentTransaction.failWithdraw(this.balance, reason);
     }
     //depositMoney related methods
     protected deposit(amount: number) {
@@ -62,7 +63,7 @@ export abstract class Account implements AccountInterface {
         let dayOfMonth = this.date.getDate();
         this.date = new Date(year, month, dayOfMonth + numberOfDays);
         if (month !== this.date.getMonth()) {
-            this.month = {1:[], 2: [], 3: []};
+            this.month = {1: 0, 2: 0, 3: 0};
         }
         return (this.date.getFullYear() - year) * 12 + (this.date.getMonth() - month);
     }

@@ -14,15 +14,17 @@ export class CheckingAccount extends Account {
     }
     withdrawMoney(amount: number, description: string, transactionType: TransactionOrigin): Transaction {
         this.currentTransaction = new TransactionClass(amount, transactionType);
-        if(this.month[transactionType].length < 1001) {
+        if(this.month[transactionType] < 1000) {
             this.balanceCheck(amount, transactionType);
         }
         else {
-            this.currentTransaction.failWithdraw(this.balance, 'You have made to many withdrawls');
-            this.accountHistory.push(this.currentTransaction);
-            this.month[transactionType].push(this.currentTransaction);
-            console.log(this.currentTransaction.description);
+            this.failWithdraw('You have made to many withdrawls via the ' + TransactionOrigin[this.currentTransaction.type]);
         }
+        //store the transaction
+        this.accountHistory.push(this.currentTransaction);
+        //log the transaction
+        console.log(this.currentTransaction.description);
+        //return the transaction
         return this.currentTransaction;
     }
     depositMoney(amount: number, description: string): Transaction {

@@ -20,6 +20,7 @@ var decorators_1 = require("../decorators");
 var transactionClass_1 = require("../transaction/transactionClass");
 //import {Account} from "./accountInterface";
 var accountClass_1 = require("./accountClass");
+var transactionOriginEnum_1 = require("../transaction/transactionOriginEnum");
 var CheckingAccount = /** @class */ (function (_super) {
     __extends(CheckingAccount, _super);
     function CheckingAccount(name, birthDate) {
@@ -29,17 +30,19 @@ var CheckingAccount = /** @class */ (function (_super) {
         return _this;
     }
     CheckingAccount.prototype.withdrawMoney = function (amount, description, transactionType) {
-        if (this.month[transactionType].length < 1001) {
-            return this.balanceCheck(amount, transactionType);
+        this.currentTransaction = new transactionClass_1.TransactionClass(amount, transactionType);
+        if (this.month[transactionType] < 1000) {
+            this.balanceCheck(amount, transactionType);
         }
         else {
-            var transaction = new transactionClass_1.TransactionClass();
-            transaction.failWithdraw(this.balance, 'You have made to many withdrawls');
-            this.accountHistory.push(transaction);
-            this.month[transactionType].push(transaction);
-            console.log(transaction.description);
-            return transaction;
+            this.failWithdraw('You have made to many withdrawls via the ' + transactionOriginEnum_1.TransactionOrigin[this.currentTransaction.type]);
         }
+        //store the transaction
+        this.accountHistory.push(this.currentTransaction);
+        //log the transaction
+        console.log(this.currentTransaction.description);
+        //return the transaction
+        return this.currentTransaction;
     };
     CheckingAccount.prototype.depositMoney = function (amount, description) {
         throw new Error("Method not implemented.");
