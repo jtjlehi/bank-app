@@ -24,17 +24,20 @@ var Account = /** @class */ (function () {
     };
     //non interface methods
     //withdrawMoney related methods
-    Account.prototype.balanceCheck = function (amount, transactionType) {
+    Account.prototype.balanceCheck = function (amount, transactionType, transactionCost) {
+        if (transactionCost === undefined) {
+            transactionCost = 0;
+        }
         if (this.balance - amount >= 0) {
-            this.successWithdraw();
+            this.successWithdraw(transactionCost);
         }
         else {
             this.failWithdraw('Withdrawl is over balance.');
         }
     };
-    Account.prototype.successWithdraw = function () {
+    Account.prototype.successWithdraw = function (transactionCost) {
         //make the withdrawl
-        this.balance = this.balance - this.currentTransaction.amount;
+        this.balance = this.balance - this.currentTransaction.amount - this.balance * transactionCost;
         //say the transaction was a success
         this.currentTransaction.successWithdraw(this.balance);
         //increase number of transactions for the month
@@ -51,10 +54,6 @@ var Account = /** @class */ (function () {
         console.log(this.currentTransaction.description);
         //return the transaction
         return this.currentTransaction;
-    };
-    //depositMoney related methods
-    Account.prototype.deposit = function (amount) {
-        this.balance += amount;
     };
     //advanceDate related methods
     Account.prototype.advance = function (numberOfDays) {

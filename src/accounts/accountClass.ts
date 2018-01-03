@@ -38,17 +38,20 @@ export abstract class Account implements AccountInterface {
     }
     //non interface methods
     //withdrawMoney related methods
-    protected balanceCheck(amount: number, transactionType: TransactionOrigin): void {
+    protected balanceCheck(amount: number, transactionType: TransactionOrigin, transactionCost?: number): void {
+        if(transactionCost === undefined) {
+            transactionCost = 0;
+        }
         if(this.balance - amount >= 0) {
-            this.successWithdraw();
+            this.successWithdraw(transactionCost);
         }
         else{
             this.failWithdraw('Withdrawl is over balance.');
         }
     }
-    protected successWithdraw() {
+    protected successWithdraw(transactionCost: number) {
         //make the withdrawl
-        this.balance = this.balance - this.currentTransaction.amount;
+        this.balance = this.balance - this.currentTransaction.amount - this.balance * transactionCost;
         //say the transaction was a success
         this.currentTransaction.successWithdraw(this.balance);
         //increase number of transactions for the month
@@ -65,10 +68,6 @@ export abstract class Account implements AccountInterface {
         console.log(this.currentTransaction.description);
         //return the transaction
         return this.currentTransaction;
-    }
-    //depositMoney related methods
-    protected deposit(amount: number) {
-        this.balance += amount;
     }
     //advanceDate related methods
     protected advance(numberOfDays: number): number {
