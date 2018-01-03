@@ -10,14 +10,19 @@ export class RetirementAccount extends Account {
         super(name, birthDate);
         this.balance = 100000;
         this.interest = .03;
+        this.transactionCost = .1;
     }
     withdrawMoney(amount: number, description: string, transactionType: TransactionOrigin): Transaction {
         this.currentTransaction = new TransactionClass(amount, transactionType);
+        this.findAge();
+        if(this.age > 60) {
+            this.transactionCost = 0;
+        }
         if(transactionType === TransactionOrigin.branch && this.month[transactionType] < 1000) {
-            this.balanceCheck(amount, transactionType, .1);
+            this.balanceCheck(amount, transactionType);
         }
         else if(this.month[transactionType] < 6) {
-            this.balanceCheck(amount, transactionType, .1);
+            this.balanceCheck(amount, transactionType);
         }
         else {
             this.failWithdraw('You have made to many withdrawls via the ' + TransactionOrigin[this.currentTransaction.type]);

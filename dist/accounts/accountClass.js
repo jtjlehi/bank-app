@@ -24,12 +24,12 @@ var Account = /** @class */ (function () {
     };
     //non interface methods
     //withdrawMoney related methods
-    Account.prototype.balanceCheck = function (amount, transactionType, transactionCost) {
-        if (transactionCost === undefined) {
-            transactionCost = 0;
+    Account.prototype.balanceCheck = function (amount, transactionType) {
+        if (this.transactionCost === undefined) {
+            this.transactionCost = 0;
         }
         if (this.balance - amount >= 0) {
-            this.successWithdraw(transactionCost);
+            this.successWithdraw(this.transactionCost);
         }
         else {
             this.failWithdraw('Withdrawl is over balance.');
@@ -91,7 +91,6 @@ var Account = /** @class */ (function () {
                 this.age = year;
             }
         }
-        console.log(year, month, day, this.age);
     };
     return Account;
 }());

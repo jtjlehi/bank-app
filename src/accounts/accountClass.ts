@@ -15,7 +15,8 @@ export abstract class Account implements AccountInterface {
     protected date: Date;
     protected month: {1: number, 2: number, 3: number};
     protected currentTransaction: Transaction;
-    protected age;
+    protected age: number;
+    protected transactionCost: number;
     //constructor
     constructor(name: string, birthDate: Date) {
         this.accountHolderName = name;
@@ -39,12 +40,12 @@ export abstract class Account implements AccountInterface {
     }
     //non interface methods
     //withdrawMoney related methods
-    protected balanceCheck(amount: number, transactionType: TransactionOrigin, transactionCost?: number): void {
-        if(transactionCost === undefined) {
-            transactionCost = 0;
+    protected balanceCheck(amount: number, transactionType: TransactionOrigin): void {
+        if(this.transactionCost === undefined) {
+            this.transactionCost = 0;
         }
         if(this.balance - amount >= 0) {
-            this.successWithdraw(transactionCost);
+            this.successWithdraw(this.transactionCost);
         }
         else{
             this.failWithdraw('Withdrawl is over balance.');

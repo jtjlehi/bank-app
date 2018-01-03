@@ -30,11 +30,18 @@ var RetirementAccount = /** @class */ (function (_super) {
     }
     RetirementAccount.prototype.withdrawMoney = function (amount, description, transactionType) {
         this.currentTransaction = new transactionClass_1.TransactionClass(amount, transactionType);
+        this.findAge();
+        if (this.age > 60) {
+            this.transactionCost = 0;
+        }
+        else {
+            this.transactionCost = .1;
+        }
         if (transactionType === transactionOriginEnum_1.TransactionOrigin.branch && this.month[transactionType] < 1000) {
-            this.balanceCheck(amount, transactionType, .1);
+            this.balanceCheck(amount, transactionType);
         }
         else if (this.month[transactionType] < 6) {
-            this.balanceCheck(amount, transactionType, .1);
+            this.balanceCheck(amount, transactionType);
         }
         else {
             this.failWithdraw('You have made to many withdrawls via the ' + transactionOriginEnum_1.TransactionOrigin[this.currentTransaction.type]);

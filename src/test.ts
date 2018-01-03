@@ -13,4 +13,4 @@ function testWithdraw(numberOfTimes: number, account: Account, type: Transaction
         account.withdrawMoney(10, 'test', type);
     }
 }
-myRetirementAccount.findAge();
+testWithdraw(3, myRetirementAccount, TransactionOrigin.web);

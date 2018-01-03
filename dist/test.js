@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var checkingAccount_1 = require("./accounts/checkingAccount");
+var transactionOriginEnum_1 = require("./transaction/transactionOriginEnum");
 var savingAccount_1 = require("./accounts/savingAccount");
 var retirementClass_1 = require("./accounts/retirementClass");
 var myCheckingAccount = new checkingAccount_1.CheckingAccount('Jared', new Date(2000, 4, 4));
@@ -11,5 +12,5 @@ function testWithdraw(numberOfTimes, account, type) {
         account.withdrawMoney(10, 'test', type);
     }
 }
-myRetirementAccount.findAge();
+testWithdraw(3, myRetirementAccount, transactionOriginEnum_1.TransactionOrigin.web);
 //# sourceMappingURL=test.js.map
