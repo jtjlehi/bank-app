@@ -15,6 +15,7 @@ export abstract class Account implements AccountInterface {
     protected date: Date;
     protected month: {1: number, 2: number, 3: number};
     protected currentTransaction: Transaction;
+    protected age;
     //constructor
     constructor(name: string, birthDate: Date) {
         this.accountHolderName = name;
@@ -85,6 +86,17 @@ export abstract class Account implements AccountInterface {
         for(let i = 0; i < months; i ++) {
             this.balance = this.balance + this.balance * this.interest/12;
             console.log(this.balance);
+        }
+    }
+    findAge(): void {
+        let year = this.date.getFullYear() - this.accountHolderBirthDate.getFullYear();
+        let month = this.date.getMonth() - this.accountHolderBirthDate.getMonth();
+        let day = this.date.getDate() - this.accountHolderBirthDate.getDate();
+        if(month > 0) { this.age = year; }
+        if(month < 0) { this.age = year - 1; }
+        else {
+            if(day < 0) { this.age = year - 1; }
+            else { this.age = year; }
         }
     }
 }

@@ -73,6 +73,26 @@ var Account = /** @class */ (function () {
             console.log(this.balance);
         }
     };
+    Account.prototype.findAge = function () {
+        var year = this.date.getFullYear() - this.accountHolderBirthDate.getFullYear();
+        var month = this.date.getMonth() - this.accountHolderBirthDate.getMonth();
+        var day = this.date.getDate() - this.accountHolderBirthDate.getDate();
+        if (month > 0) {
+            this.age = year;
+        }
+        if (month < 0) {
+            this.age = year - 1;
+        }
+        else {
+            if (day < 0) {
+                this.age = year - 1;
+            }
+            else {
+                this.age = year;
+            }
+        }
+        console.log(year, month, day, this.age);
+    };
     return Account;
 }());
 exports.Account = Account;
