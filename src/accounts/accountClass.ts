@@ -15,6 +15,7 @@ export abstract class Account implements AccountInterface {
     protected date: Date;
     protected month: {1: number, 2: number, 3: number};
     protected currentTransaction: Transaction;
+    protected transactionCost: number;
     //constructor
     constructor(name: string, birthDate: Date) {
         this.accountHolderName = name;
@@ -25,7 +26,13 @@ export abstract class Account implements AccountInterface {
     }
     //methods
     abstract withdrawMoney(amount: number, description: string, transactionOrigin: TransactionOrigin): Transaction;
-    abstract depositMoney(amount: number, description: string): Transaction;
+    depositMoney(amount: number, description: string): Transaction {
+        console.log(this.balance);
+        let transaction = new TransactionClass(amount, TransactionOrigin.web);
+        this.balance = transaction.deposit(this.balance, description);
+        console.log(transaction.description);
+        return transaction;
+    }
     advanceDate(numberOfDays: number){
         let monthsAdvanced = this.advance(numberOfDays);
         this.addInterest(monthsAdvanced);
@@ -51,6 +58,14 @@ export abstract class Account implements AccountInterface {
     protected failWithdraw(reason: string) {
         //make the transaction fail
         this.currentTransaction.failWithdraw(this.balance, reason);
+    }
+    protected completeTransaction() {
+        //store the transaction
+        this.accountHistory.push(this.currentTransaction);
+        //log the transaction
+        console.log(this.currentTransaction.description);
+        //return the transaction
+        return this.currentTransaction;
     }
     //depositMoney related methods
     protected deposit(amount: number) {

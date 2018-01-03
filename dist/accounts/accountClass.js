@@ -1,5 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var transactionClass_1 = require("../transaction/transactionClass");
+var transactionOriginEnum_1 = require("../transaction/transactionOriginEnum");
 var Account = /** @class */ (function () {
     //constructor
     function Account(name, birthDate) {
@@ -9,6 +11,13 @@ var Account = /** @class */ (function () {
         this.date = new Date();
         this.month = { 1: 0, 2: 0, 3: 0 };
     }
+    Account.prototype.depositMoney = function (amount, description) {
+        console.log(this.balance);
+        var transaction = new transactionClass_1.TransactionClass(amount, transactionOriginEnum_1.TransactionOrigin.web);
+        this.balance = transaction.deposit(this.balance, description);
+        console.log(transaction.description);
+        return transaction;
+    };
     Account.prototype.advanceDate = function (numberOfDays) {
         var monthsAdvanced = this.advance(numberOfDays);
         this.addInterest(monthsAdvanced);
@@ -34,6 +43,14 @@ var Account = /** @class */ (function () {
     Account.prototype.failWithdraw = function (reason) {
         //make the transaction fail
         this.currentTransaction.failWithdraw(this.balance, reason);
+    };
+    Account.prototype.completeTransaction = function () {
+        //store the transaction
+        this.accountHistory.push(this.currentTransaction);
+        //log the transaction
+        console.log(this.currentTransaction.description);
+        //return the transaction
+        return this.currentTransaction;
     };
     //depositMoney related methods
     Account.prototype.deposit = function (amount) {

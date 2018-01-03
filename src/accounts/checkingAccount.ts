@@ -20,14 +20,6 @@ export class CheckingAccount extends Account {
         else {
             this.failWithdraw('You have made to many withdrawls via the ' + TransactionOrigin[this.currentTransaction.type]);
         }
-        //store the transaction
-        this.accountHistory.push(this.currentTransaction);
-        //log the transaction
-        console.log(this.currentTransaction.description);
-        //return the transaction
-        return this.currentTransaction;
-    }
-    depositMoney(amount: number, description: string): Transaction {
-        throw new Error("Method not implemented.");
+        return this.completeTransaction();
     }
 }

@@ -7,10 +7,10 @@ var TransactionClass = /** @class */ (function () {
         this.type = type;
     }
     TransactionClass.prototype.successWithdraw = function (balance) {
-        this.success;
+        this.success = true;
         var resultBalance = balance - this.amount;
         this.resultBalance = balance - this.amount;
-        this.description = "Withdrew $" + this.amount + " from the account using " + transactionOriginEnum_1.TransactionOrigin[this.type] + " resulting in a balance of $" + balance + ".";
+        this.description = "Withdrew $" + this.amount + " from the account using the " + transactionOriginEnum_1.TransactionOrigin[this.type] + " resulting in a balance of $" + balance + ".";
         this.errorMessage = '';
     };
     TransactionClass.prototype.failWithdraw = function (balance, error) {
@@ -19,6 +19,12 @@ var TransactionClass = /** @class */ (function () {
         this.resultBalance = balance;
         this.errorMessage = "Failer Reason: " + error;
         this.description = "Failed to withdraw money; " + this.errorMessage;
+    };
+    TransactionClass.prototype.deposit = function (balance, description) {
+        this.success = true;
+        this.resultBalance = balance + this.amount;
+        this.description = "Deposited $" + this.amount + " into the account. The resulting balance is $" + this.resultBalance + ".\nDescription: " + description;
+        return this.resultBalance;
     };
     return TransactionClass;
 }());

@@ -9,4 +9,4 @@ function testWithdraw(numberOfTimes: number, account: Account) {
         account.withdrawMoney(.99, 'test', TransactionOrigin.phone);
     }
 }
-testWithdraw(1001, myCheckingAccount);
+myCheckingAccount.depositMoney(40, 'test');

@@ -8,5 +8,5 @@ function testWithdraw(numberOfTimes, account) {
         account.withdrawMoney(.99, 'test', transactionOriginEnum_1.TransactionOrigin.phone);
     }
 }
-testWithdraw(1001, myCheckingAccount);
+myCheckingAccount.depositMoney(40, 'test');
 //# sourceMappingURL=test.js.map

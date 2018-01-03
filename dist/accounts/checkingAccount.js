@@ -37,15 +37,7 @@ var CheckingAccount = /** @class */ (function (_super) {
         else {
             this.failWithdraw('You have made to many withdrawls via the ' + transactionOriginEnum_1.TransactionOrigin[this.currentTransaction.type]);
         }
-        //store the transaction
-        this.accountHistory.push(this.currentTransaction);
-        //log the transaction
-        console.log(this.currentTransaction.description);
-        //return the transaction
-        return this.currentTransaction;
-    };
-    CheckingAccount.prototype.depositMoney = function (amount, description) {
-        throw new Error("Method not implemented.");
+        return this.completeTransaction();
     };
     CheckingAccount = __decorate([
         decorators_1.displayClassNameWithPurpose('An account class for people who want to withdraw from there account easily')
